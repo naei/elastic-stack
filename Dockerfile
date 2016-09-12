@@ -8,7 +8,7 @@ RUN \
 # Base install
   apt-get update && \
   apt-get -y upgrade && \
-  apt-get install -y wget curl httpie vim nano apt-utils apt-transport-https openjdk-8-jdk && \
+  apt-get install -y wget curl httpie vim nano screen apt-utils apt-transport-https openjdk-8-jdk && \
 # Add the Elastic key & repositories
   wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add - && \
   apt-key adv --recv-keys --keyserver keyserver.ubuntu.com D88E42B4 && \
@@ -30,4 +30,7 @@ EXPOSE \
 ENTRYPOINT \
   service elasticsearch start && \
   service kibana start && \
+  service logstash start && \
+  # start to watch logs using logstash conf files
+  if [ "$(ls -A /etc/logstash/conf.d/)" ]; then screen -S logstash -dm /opt/logstash/bin/logstash -f /etc/logstash/conf.d/; fi && \
   /bin/bash
