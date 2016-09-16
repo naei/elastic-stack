@@ -5,6 +5,11 @@ The Elastic Stack: Elasticsearch, Logstash & Kibana
 ### Build
 <pre><code>docker build -t naei/elasticstack .</code></pre>
 
+##### ... or directly pull the image from the Docker Hub Registry:
+```
+docker pull naei/elasticstack
+```
+
 ### Run 
 #### ...in shell
 <pre><code>docker run -it \
@@ -20,7 +25,7 @@ The Elastic Stack: Elasticsearch, Logstash & Kibana
   -p 5601:5601 \
   naei/elasticstack</code></pre>
 
-#### ...and watch / parse / save logs with Logstash
+#### ...then watch / parse / save logs with Logstash
 <pre><code>docker run -dit \
 -p 9200:9200 \
 -p 9300:9300 \
