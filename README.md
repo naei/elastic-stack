@@ -1,44 +1,48 @@
-## docker-elasticstack
+# elastic-stack
 
-The Elastic Stack: Elasticsearch, Logstash & Kibana
+Elastic Stack sample setup for Nginx with Filebeat using Docker.
 
-### Build
-<pre><code>docker build -t naei/elasticstack .</code></pre>
+### Server:  Elasticsearch, Logstash & Kibana
 
-##### ... or directly pull the image from the Docker Hub Registry:
+#### Build
 ```
-docker pull naei/elasticstack
+cd ./elastic-stack
+docker build -t naei/elastic-stack .
 ```
 
-### Run 
-#### ...in shell
-<pre><code>docker run -it \
-  -p 9200:9200 \
-  -p 9300:9300 \
-  -p 5601:5601 \
-  naei/elasticstack</code></pre>
+#### Run
+```
+docker run \
+-p 5601:5601 -p 5044:5044 -p 9200:9200 -p 9300:9300 \
+-v <path-to>/elastic-stack/conf/logstash/conf.d/logstash.conf:/etc/logstash/conf.d/logstash.conf \
+-v <path-to>/elastic-stack/conf/logstash/patterns:/etc/logstash/patterns \
+-v <path-to>/elastic-stack/conf/logstash/templates:/etc/logstash/templates \
+-it naei/elastic-stack
+```
 
-#### ...in detached mode
-<pre><code>docker run -dit \
-  -p 9200:9200 \
-  -p 9300:9300 \
-  -p 5601:5601 \
-  naei/elasticstack</code></pre>
+At this point, the Kibana interface should be available at `http://<server>:5601`.
 
-#### ...then watch / parse / save logs with Logstash
-<pre><code>docker run -dit \
--p 9200:9200 \
--p 9300:9300 \
--p 5601:5601 \
--v <i><b>/var/log</b></i>:/var/log \
--v <i><b>~/conf/logstash</b></i>:/etc/logstash \
-naei/elasticstack</code></pre>
+Install and run Filebeat on the client, then go back to Kibana:
+- Write `filebeat-*-*` pattern > "Create"
 
-Notes: 
-  - On this repository, the files in the conf/logstash directory are examples, and not necessarily needed.
-  - Logstash conf files and volumes must be added / edited depending on the needs and the folders structure of each environment.
+Finally you can import the Nginx logs dashboard: 
+- "Management" > "Saved Objects" > "Import" > Import the dashboard from the local folder:`<path-to>/ubuntu/elastic-stack/dashboard/nginx.json`
 
-### Troubleshooting
 
-#### On which IP the server is running?
-<pre><code>docker inspect --format '{{ .NetworkSettings.IPAddress }}' <i><b>container_name_or_id</b></i> </code></pre>
+### Client: Filebeat
+
+#### Build
+```
+cd ./elastic-beats
+docker build -t naei/elastic-beats .
+```
+
+#### Run
+In `<path-to>/elastic-beats/conf/filebeat/filebeat.yml` edit `hosts` with the Elastic Stack server address.
+Then run:  
+```
+docker run \
+-v <path-to>/elastic-beats/conf/filebeat/filebeat.yml:/etc/filebeat/filebeat.yml \
+-v /var/log/nginx:/var/log/nginx \
+-it naei/elastic-beats
+```

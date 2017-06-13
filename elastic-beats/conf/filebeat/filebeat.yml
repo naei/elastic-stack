@@ -1,0 +1,19 @@
+#=========================== Filebeat prospectors =============================
+
+filebeat.prospectors:
+
+- input_type: log
+  paths:
+    - /var/log/nginx/*error*
+  document_type: nginx-error
+
+- input_type: log
+  paths:
+    - /var/log/nginx/*access*
+  document_type: nginx-access
+
+#----------------------------- Logstash output --------------------------------
+
+output.logstash:
+
+  hosts: ["127.0.0.1:5044"]
