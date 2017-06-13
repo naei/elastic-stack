@@ -26,7 +26,7 @@ Install and run Filebeat on the client, then go back to Kibana:
 - Write `filebeat-*-*` pattern > "Create"
 
 Finally you can import the Nginx logs dashboard: 
-- "Management" > "Saved Objects" > "Import" > Import the dashboard from the local folder:`<path-to>/ubuntu/elastic-stack/dashboard/nginx.json`
+- "Management" > "Saved Objects" > "Import" > Import the dashboard from the local folder:`<path-to>/elastic-stack/dashboards/nginx.json`
 
 
 ### Client: Filebeat
