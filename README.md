@@ -23,11 +23,14 @@ docker run \
 
 At this point, the Kibana interface should be available at `http://<server>:5601`.
 
-Install and run Filebeat on the client, then go back to Kibana:
-- Write `filebeat-*` pattern > "Create"
+#### Set up Kibana
 
-Finally you can import the Nginx logs dashboard: 
-- "Management" > "Saved Objects" > "Import" > Import the dashboard from the local folder:`<path-to>/elastic-stack/conf/kibana/dashboards/nginx.json`
+- Connect with the default credentials: `elastic:changeme`.  
+*It is strongly recommended to immediately change the password.*  
+
+- On the first start, Kibana ask to configure an index pattern. Write the `filebeat-*` pattern then click on "Create".  
+
+- Finally you can import the Nginx logs dashboard: "Management" > "Saved Objects" > "Import" > Import the dashboard from the local folder:`<path-to>/elastic-stack/conf/kibana/dashboards/nginx.json`  
 
 
 ### Client: Filebeat
