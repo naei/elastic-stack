@@ -16,7 +16,7 @@ RUN \
 # Install Filebeat
   apt-get install -y filebeat
 
-ENTRYPOINT \
+CMD \
   chown -R 0 /etc/filebeat && chmod -R go-w /etc/filebeat && \
   service filebeat start && \
   /bin/bash

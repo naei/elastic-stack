@@ -35,8 +35,8 @@ EXPOSE \
   # Logstash
   5044
 
-ENTRYPOINT \
+CMD \
+  chown -R elasticsearch:elasticsearch /var/lib/elasticsearch && \
   service elasticsearch start && \
   service kibana start && \
-  /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf && \
-  /bin/bash
+  /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf

@@ -17,7 +17,8 @@ docker run \
 -v <path-to>/elastic-stack/conf/logstash/conf.d/logstash.conf:/etc/logstash/conf.d/logstash.conf \
 -v <path-to>/elastic-stack/conf/logstash/patterns:/etc/logstash/patterns \
 -v <path-to>/elastic-stack/conf/logstash/templates:/etc/logstash/templates \
--it naei/elastic-stack
+-v <path-to-save-elastic-data>:/var/lib/elacticsearch \
+-d naei/elastic-stack
 ```
 
 At this point, the Kibana interface should be available at `http://<server>:5601`.
@@ -26,7 +27,7 @@ Install and run Filebeat on the client, then go back to Kibana:
 - Write `filebeat-*-*` pattern > "Create"
 
 Finally you can import the Nginx logs dashboard: 
-- "Management" > "Saved Objects" > "Import" > Import the dashboard from the local folder:`<path-to>/elastic-stack/dashboards/nginx.json`
+- "Management" > "Saved Objects" > "Import" > Import the dashboard from the local folder:`<path-to>/elastic-stack/conf/kibana/dashboards/nginx.json`
 
 
 ### Client: Filebeat
@@ -44,5 +45,5 @@ Then run:
 docker run \
 -v <path-to>/elastic-beats/conf/filebeat/filebeat.yml:/etc/filebeat/filebeat.yml \
 -v /var/log/nginx:/var/log/nginx \
--it naei/elastic-beats
+-d naei/elastic-beats
 ```
