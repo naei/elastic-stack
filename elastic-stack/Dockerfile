@@ -21,10 +21,6 @@ RUN \
   apt-get install -y kibana && \
 # Install Logstash
   apt-get install -y logstash && \
-# Install X-Pack
-  /usr/share/elasticsearch/bin/elasticsearch-plugin install x-pack --batch && \
-  /usr/share/kibana/bin/kibana-plugin install x-pack && \
-  /usr/share/logstash/bin/logstash-plugin install x-pack && \
 # Allow network access to Elasticsearch from the host
   sed -i "s/#network.host:.*/network.host: 127.0.0.1/" /etc/elasticsearch/elasticsearch.yml && \
   sed -i "s/#server.host:.*/server.host: 0.0.0.0/" /etc/kibana/kibana.yml
@@ -41,4 +37,5 @@ CMD \
   chown -R elasticsearch:elasticsearch /var/lib/elasticsearch && \
   service elasticsearch start && \
   service kibana start && \
-  /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+  nohup /usr/share/logstash/bin/logstash --path.settings=/etc/logstash -f /etc/logstash/conf.d/logstash.conf > /var/log/logstash/logstash_run.log 2>&1 & \
+  /bin/bash
