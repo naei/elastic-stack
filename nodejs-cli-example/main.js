@@ -16,15 +16,26 @@ const message = {
   message: 'What have I done?!'
 };
 
-// Send the log to Elasticsearch
-client.index({
-  index:  indexName,
-  type:   typeName,
-  body:   message
-}, function (error, response) {
-  if (error){
-    console.log("Error:", error);
+// Check the connection with Elasticsearch
+client.ping({
+  requestTimeout: 30000,
+}, function (error) {
+  if (error) {
+    console.error('Elasticsearch cluster is down!');
   } else {
-    console.log("Success", response);
+    console.log('Elasticsearch cluster is up!');
+
+    // Send the log to Elasticsearch
+    client.index({
+      index:  indexName,
+      type:   typeName,
+      body:   message
+    }, function (error, response) {
+      if (error){
+        console.log("Error:", error);
+      } else {
+        console.log("Success", response);
+      }
+    });
   }
 });
