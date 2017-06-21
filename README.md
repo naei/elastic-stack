@@ -12,6 +12,9 @@ docker build -t naei/elastic-stack .
 
 #### Run
 ```
+sysctl -w vm.max_map_count=262144
+```
+```
 docker run \
 -p 5601:5601 -p 5044:5044 -p 9200:9200 -p 9300:9300 \
 -v <path-to>/elastic-stack/conf/logstash/conf.d/logstash.conf:/etc/logstash/conf.d/logstash.conf \
