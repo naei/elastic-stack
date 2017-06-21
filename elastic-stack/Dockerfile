@@ -22,7 +22,7 @@ RUN \
 # Install Logstash
   apt-get install -y logstash && \
 # Allow network access to Elasticsearch from the host
-  sed -i "s/#network.host:.*/network.host: 127.0.0.1/" /etc/elasticsearch/elasticsearch.yml && \
+  sed -i "s/#network.host:.*/network.host: 0.0.0.0/" /etc/elasticsearch/elasticsearch.yml && \
   sed -i "s/#server.host:.*/server.host: 0.0.0.0/" /etc/kibana/kibana.yml
 
 EXPOSE \
@@ -37,5 +37,5 @@ CMD \
   chown -R elasticsearch:elasticsearch /var/lib/elasticsearch && \
   service elasticsearch start && \
   service kibana start && \
-  nohup /usr/share/logstash/bin/logstash --path.settings=/etc/logstash -f /etc/logstash/conf.d/logstash.conf > /var/log/logstash/logstash_run.log 2>&1 & \
+  nohup /usr/share/logstash/bin/logstash --path.settings /etc/logstash -f /etc/logstash/conf.d/logstash.conf > /var/log/logstash/logstash_run.log 2>&1 & \
   /bin/bash
