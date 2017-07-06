@@ -17,8 +17,8 @@ docker run \
 -v <path-to>/elastic-stack/conf/logstash/conf.d/logstash.conf:/etc/logstash/conf.d/logstash.conf \
 -v <path-to>/elastic-stack/conf/logstash/patterns:/etc/logstash/patterns \
 -v <path-to>/elastic-stack/conf/logstash/templates:/etc/logstash/templates \
--v <path-to-save-elastic-data>:/var/lib/elacticsearch \
--d naei/elastic-stack
+-v <path-to-save-elastic-data>:/var/lib/elasticsearch \
+-id naei/elastic-stack
 ```
 
 At this point, the Kibana interface should be available at `http://<server>:5601`.
