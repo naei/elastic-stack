@@ -30,9 +30,6 @@ In some cases, Elasticsearch might not start properly. In case of trouble, you c
 
 ### Set up Kibana
 
-- Connect with the default credentials: `elastic:changeme`.  
-*It is strongly recommended to immediately change the password.*  
-
 - On the first start, Kibana ask to configure an index pattern. Write the `filebeat-*` pattern then click on "Create".  
 
 - Finally you can import the Nginx logs dashboard: "Management" > "Saved Objects" > "Import" > Import the dashboard from the local folder:`<path-to>/elastic-stack/conf/kibana/dashboards/nginx.json`  
